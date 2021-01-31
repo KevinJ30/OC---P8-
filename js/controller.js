@@ -53,7 +53,7 @@
 	 */
 	Controller.prototype.setView = function (locationHash) {
 		var route = locationHash.split('/')[1];
-		var page = route || '';
+        var page = route || '';
 		this._updateFilterState(page);
 	};
 
@@ -72,7 +72,10 @@
 	 * Renders all active tasks
 	 */
 	Controller.prototype.showActive = function () {
-		var self = this;
+        var self = this;
+        self.model.read({completed: false}, (data) => {
+            console.log(data);
+        })
 		self.model.read({ completed: false }, function (data) {
 			self.view.render('showEntries', data);
 		});
@@ -278,7 +281,6 @@
 		}
 
 		this._filter();
-
 		this.view.render('setFilter', currentPage);
 	};
 

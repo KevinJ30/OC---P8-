@@ -3,8 +3,8 @@
 describe('controller', function () {
 	'use strict';
 
-	var subject, model, view;
-
+    var subject, model, view;
+    
 	var setUpModel = function (todos) {
 		model.read.and.callFake(function (query, callback) {
 			callback = callback || query;
@@ -36,7 +36,7 @@ describe('controller', function () {
 
 		model.update.and.callFake(function (id, updateData, callback) {
 			callback();
-		});
+        });
 	};
 
 	var createViewStub = function () {
@@ -54,13 +54,12 @@ describe('controller', function () {
 
 	beforeEach(function () {
 		model = jasmine.createSpyObj('model', ['read', 'getCount', 'remove', 'create', 'update']);
-		view = createViewStub();
-		subject = new app.Controller(model, view);
+        view = createViewStub();
+        subject = new app.Controller(model, view);
 	});
 
 	it('should show entries on start-up', function () {
-		// TODO: write test
-	});
+    });
 
 	describe('routing', function () {
 
@@ -69,7 +68,6 @@ describe('controller', function () {
 			setUpModel([todo]);
 
 			subject.setView('');
-
 			expect(view.render).toHaveBeenCalledWith('showEntries', [todo]);
 		});
 
@@ -83,7 +81,9 @@ describe('controller', function () {
 		});
 
 		it('should show active entries', function () {
-			// TODO: write test
+			setUpModel([{title: 'Testing todo not active', completed: false}, {title: 'Testing todo not active', completed: true}, {title: 'Testing todo not active', completed: true}]);
+
+            subject.setView('#/active');
 		});
 
 		it('should show completed entries', function () {
@@ -331,10 +331,8 @@ describe('controller', function () {
 
 		it('should not persist the changes on cancel', function () {
 			var todo = {id: 21, title: 'my todo', completed: false};
-			setUpModel([todo]);
-
+            setUpModel([todo]);
 			subject.setView('');
-
 			view.trigger('itemEditCancel', {id: 21});
 
 			expect(model.update).not.toHaveBeenCalled();
