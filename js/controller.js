@@ -73,9 +73,6 @@
 	 */
 	Controller.prototype.showActive = function () {
         var self = this;
-        self.model.read({completed: false}, (data) => {
-            console.log(data);
-        })
 		self.model.read({ completed: false }, function (data) {
 			self.view.render('showEntries', data);
 		});
