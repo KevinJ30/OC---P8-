@@ -26,6 +26,26 @@
 		callback.call(this, JSON.parse(localStorage[name]));
 	}
 
+    /**
+     * Generate unique id for the new item, add timestamp
+     * to be sure of its uniqueness
+     * 
+     * @return {number} Return a unique id for new element on the store
+     **/
+    Store.prototype.generate_id = function() {
+        // Generate an ID
+        var newId = ""; 
+        var charset = "0123456789";
+        
+        for (var i = 0; i < 6; i++) {
+            newId += charset.charAt(Math.floor(Math.random() * charset.length));
+        }
+
+        newId += Date.now();
+
+        return newId;
+    }
+
 	/**
 	 * Finds items based on a query given as a JS object
 	 *
@@ -80,13 +100,7 @@
 
 		callback = callback || function () {};
 
-		// Generate an ID
-	    var newId = ""; 
-	    var charset = "0123456789";
-
-        for (var i = 0; i < 6; i++) {
-     		newId += charset.charAt(Math.floor(Math.random() * charset.length));
-		}
+        var newId = this.generate_id();
 
 		// If an ID was actually given, find the item and update each property
 		if (id) {
