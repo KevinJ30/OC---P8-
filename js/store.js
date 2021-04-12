@@ -90,15 +90,30 @@
 
 		// If an ID was actually given, find the item and update each property
 		if (id) {
-			for (var i = 0; i < todos.length; i++) {
-				if (todos[i].id === id) {
-					for (var key in updateData) {
-						todos[i][key] = updateData[key];
-					}
-					break;
-				}
-			}
 
+            // Parcourt toutes les todos avec map
+            todos.map((todo) => {
+                if(todo.id === id) {
+                    console.log(todo);
+                    todo = {
+                        ...todo,
+                        updateData
+                    };
+                }
+            });
+
+            /** Ancienne version du code **/
+			// for (var i = 0; i < todos.length; i++) {
+			// 	if (todos[i].id === id) {
+			// 		for (var key in updateData) {
+            //             console.log(key);
+			// 			todos[i][key] = updateData[key];
+			// 		}
+			// 		break;
+			// 	}
+			// }
+            /** END **/
+            
 			localStorage[this._dbName] = JSON.stringify(data);
 			callback.call(this, todos);
 		} else {
