@@ -90,16 +90,17 @@
 
 		// If an ID was actually given, find the item and update each property
 		if (id) {
-
             /** Nouvelle version du code **/
-            todos.map((todo) => {
+            todos = todos.map((todo) => {
                 if(todo.id === id) {
-                    todo = {
+                    return {
                         ...todo,
-                        updateData
-                    };
+                        ...updateData
+                    }
                 }
+                return todo;
             });
+            data.todos = todos;
             /** END **/
 
             /** Ancienne version du code **/
