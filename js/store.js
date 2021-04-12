@@ -46,7 +46,7 @@
 
 		var todos = JSON.parse(localStorage[this._dbName]).todos;
 
-		callback.call(this, todos.filter(function (todo) {
+        callback.call(this, todos.filter(function (todo) {
 			for (var q in query) {
 				if (query[q] !== todo[q]) {
 					return false;
@@ -91,16 +91,16 @@
 		// If an ID was actually given, find the item and update each property
 		if (id) {
 
-            // Parcourt toutes les todos avec map
+            /** Nouvelle version du code **/
             todos.map((todo) => {
                 if(todo.id === id) {
-                    console.log(todo);
                     todo = {
                         ...todo,
                         updateData
                     };
                 }
             });
+            /** END **/
 
             /** Ancienne version du code **/
 			// for (var i = 0; i < todos.length; i++) {
@@ -113,14 +113,13 @@
 			// 	}
 			// }
             /** END **/
-            
+
 			localStorage[this._dbName] = JSON.stringify(data);
 			callback.call(this, todos);
 		} else {
 
     		// Assign an ID
 			updateData.id = parseInt(newId);
-    
 
 			todos.push(updateData);
 			localStorage[this._dbName] = JSON.stringify(data);
@@ -137,19 +136,27 @@
 	Store.prototype.remove = function (id, callback) {
 		var data = JSON.parse(localStorage[this._dbName]);
 		var todos = data.todos;
-		var todoId;
-		
-		for (var i = 0; i < todos.length; i++) {
-			if (todos[i].id == id) {
-				todoId = todos[i].id;
-			}
-		}
 
-		for (var i = 0; i < todos.length; i++) {
-			if (todos[i].id == todoId) {
-				todos.splice(i, 1);
-			}
-		}
+        /** Nouvelle version du code **/
+        todos = todos.filter((todo) => todo.id !== id);
+        data.todos = todos;
+        /** END **/
+
+        /** Anciene version du code **/
+		//var todoId;
+        
+		// for (var i = 0; i < todos.length; i++) {
+		// 	if (todos[i].id == id) {
+		// 		todoId = todos[i].id;
+		// 	}
+		// }
+
+		// for (var i = 0; i < todos.length; i++) {
+		// 	if (todos[i].id == todoId) {
+		// 		todos.splice(i, 1);
+		// 	}
+		// }
+        /** END **/
 
 		localStorage[this._dbName] = JSON.stringify(data);
 		callback.call(this, todos);
